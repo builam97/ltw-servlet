@@ -278,16 +278,43 @@ $(favoriteListBtn).on('click', function(event) {
   $('#modalFavoriteList').toggleClass('show');
 });
 function favoritemusic(){
-		console.log(username);
-		var url = 'http://localhost:8089/Muzic/rest/favorite/'+username;
+  console.log(username);
+  var url = 'http://localhost:8089/Muzic/rest/favorite/'+username;
+  favoriteList = [];
+  fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log((myJson));
+      for(var i =0;i< myJson.length;i++){
+        favoriteList.push(
+          {
+            id: myJson[i].idTrack,
+            index: i,
+            title: myJson[i].title,
+            user: {
+              avatar_url: myJson[i].avatar_url,
+              username: myJson[i].authorname
+            }
+          }
+        );
+      }
+      let html = '';
+	    favoriteList.forEach(element=>{
+	      html +=  '<li class="item">\
+	                  <div class="TrackItem " data-trackIndex="'+element.index+'">\
+	                    <div class="media-wrapper">\
+	                      <img src="' + element.user.avatar_url + '" alt="'+element.user.username+'" />\
+	                    </div>\
+	                    <p class="title">'+element.title+'</p>\
+	                    <p class="author">'+element.user.username+'</p>\
+	                  </div>\
+	                </li>'
+	    });
 
-		fetch(url)
-		  .then(function(response) {
-		    return response.json();
-		  })
-		  .then(function(myJson) {
-		    console.log((myJson));
-		  });
+	    $('#modalFavoriteList .favorite-list-box').html(html);
+    });
 }
 let setLocalFavoriteList = ()=>{
   window.localStorage.setItem("favoriteList", JSON.stringify(favoriteList));
@@ -299,17 +326,17 @@ $('#like-btn').on('click', function(event) {
 	  try {
 	    console.log(SClistTrack[mainTrack.indexTrack].id);
 	    $(this).toggleClass('like');
-	    favoriteList.push(
-	      {
-	        id: SClistTrack[mainTrack.indexTrack].id,
-	        index: favoriteList.length,
-	        title: SClistTrack[mainTrack.indexTrack].title,
-	        user: {
-	          avatar_url: SClistTrack[mainTrack.indexTrack].user.avatar_url,
-	          username: SClistTrack[mainTrack.indexTrack].user.username
-	        }
-	      }
-	    );
+	    // favoriteList.push(
+	    //   {
+	    //     id: SClistTrack[mainTrack.indexTrack].id,
+	    //     index: favoriteList.length,
+	    //     title: SClistTrack[mainTrack.indexTrack].title,
+	    //     user: {
+	    //       avatar_url: SClistTrack[mainTrack.indexTrack].user.avatar_url,
+	    //       username: SClistTrack[mainTrack.indexTrack].user.username
+	    //     }
+	    //   }
+	    // );
 	    console.log("favorite",SClistTrack[mainTrack.indexTrack].user.avatar_url);
 	    var url = 'http://localhost:8089/Muzic/rest/favorite';
 	    var data= {
@@ -328,20 +355,7 @@ $('#like-btn').on('click', function(event) {
 	    }).then(res => res.json())
 	    .then(response => console.log('Success:', console.log(response)))
 	    .catch(error => console.error('Error:', error));
-	    let html = '';
-	    favoriteList.forEach(element=>{
-	      html +=  '<li class="item">\
-	                  <div class="TrackItem " data-trackIndex="'+element.index+'">\
-	                    <div class="media-wrapper">\
-	                      <img src="' + element.user.avatar_url + '" alt="'+element.user.username+'" />\
-	                    </div>\
-	                    <p class="title">'+element.title+'</p>\
-	                    <p class="author">'+element.user.username+'</p>\
-	                  </div>\
-	                </li>'
-	    });
-
-	    $('#modalFavoriteList .favorite-list-box').html(html);
+	    
 	  }
 	  catch(err) {
 	    console.log('sai dau do roi',err);

@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//WebContent/Home.jsp=UTF-8
+encoding//WebContent/Login.jsp=UTF-8
+encoding//src/com/mvc/service/FavoriteMusicService.java=UTF-8
+encoding//src/com/mvc/service/UserService.java=UTF-8
+encoding//src/music/DownloadAttachmentServlet.java=UTF-8

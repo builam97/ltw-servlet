@@ -14,8 +14,8 @@
   <!-- css -->
   <link rel="stylesheet" href="assets/css/main.css">
   <script type="text/javascript">
-  	var username = "<%=session.getAttribute("username") %>";
-  	var id = "<%=session.getAttribute("idusers") %>"
+  	var username = '<%=session.getAttribute("username") %>';
+  	var id = '<%=session.getAttribute("idusers") %>';
   </script>
 </head>
 <body>
@@ -25,7 +25,7 @@
         <img src="assets/images/bee.png" alt="Bee music">
         <span class="text">Bee Music</span>
       </div>
-		
+
       <ul class="menu-01">
         <!-- ////////////////////////chua login//////////////////////////// -->
         <!-- <li class="item">
@@ -40,7 +40,7 @@
           <div class="account">
             <ul class="account-box">
               <li class="item">
-                <a href="#" id="favorite-list-btn" >Danh sách yêu thích</a>
+                <a href="dsyt.jsp" id="favorite-list-btn">Danh sách yêu thích</a>
               </li>
 
               <li class="item">
@@ -48,17 +48,18 @@
               </li>
 
               <li class="item upload-item">
-                <form action="">
+                <!-- <form action="">
                   <input type="file" name="" id="music-file">
                   <label id="music-label" for="music-file">Upload nhạc</label>
-                </form>
+                </form> -->
+                <a href="#" id="upload_link">Upload nhạc</a>
               </li>
             </ul>
           </div>
         </li>
 
         <li class="item">
-          <a href="login.html">Đăng xuất</a>
+          <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
         </li>
       </ul>
     </nav>
@@ -211,15 +212,46 @@
         </div>
       </div>
 
-      <div class="modal-01 favorite-list" id="modalFavoriteList">
+      <div class="modal-01" id="modalUpload">
         <div class="modal-header">
-          <p class="modal__title">Setting</p>
+          <p class="modal__title">Tải nhạc lên website</p>
           <div class="close-btn"></div>
         </div>
         <div class="modal-body">
-          <ul class="favorite-list-box">
+          <form action="" class="upload-form">
+            <div class="left-content">
+              <div class="input-item">
+                <label for="file-upload__name" class="desc">
+                  Tên bài hát
+                </label>
+                <input type="text" name="" id="file-upload__name" class="input-song-name">
+              </div>
+
+              <div class="input-item">
+                <span class="desc">Chọn file</span>
+                <label for="file-upload__file" class="file-upload__file-label">
+                 <input type="file" name="" id="file-upload__file">
+                </label>
+              </div>
+            </div>
             
-          </ul>
+            <div class="right-content">
+              <div class="input-item">
+                <span class="desc">Chọn chất lượng nhạc</span>
+                <select name="quality" id="">
+                  <option value="128">128</option>
+                  <option value="164">164</option>
+                  <option value="320">320</option>
+                </select>
+              </div>
+              
+              <textarea name="" id="" cols="30" rows="10" placeholder="Nhập lời bài hát ... "></textarea>
+            </div> 
+
+            <div class="btn-wrapper">
+              <button class="file-upload__button">Upload</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

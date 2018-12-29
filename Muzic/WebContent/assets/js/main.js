@@ -50,7 +50,9 @@ window.addEventListener('DOMContentLoaded', function(){
       pause_or_play_btn = document.getElementById('pause_or_play_btn'),
       speaker_volume = document.getElementById('speaker-volume'),
       speaker_progress = document.getElementById('speakerProgress'),
-      favoriteListBtn = document.getElementById('favoriteListBtn')
+      favoriteListBtn = document.getElementById('favoriteListBtn'),
+      upload_link = document.getElementById('upload_link'),
+      modal_upload = document.getElementById('modalUpload')
       ;
 
   // console.log(speaker_volume.getBoundingClientRect().y);
@@ -259,6 +261,8 @@ $(document).on('click', '#modalFavoriteList .TrackItem', async function(event) {
   event.preventDefault();
   let index = parseInt($(this).attr('data-trackIndex'));
   console.log(favoriteList);
+  localStorage.setItem('idmusic',favoriteList[index].idMusic);
+  $('#like-btn').addClass('like');
   playTrackWithIndex(index, favoriteList);
 });
 
@@ -290,6 +294,7 @@ function favoritemusic(){
       for(var i =0;i< myJson.length;i++){
         favoriteList.push(
           {
+            idMusic: myJson[i].id,
             id: myJson[i].idTrack,
             index: i,
             title: myJson[i].title,
@@ -324,37 +329,40 @@ let setLocalFavoriteList = ()=>{
 $('#like-btn').on('click', function(event) {
 	  event.preventDefault();
 	  try {
-	    console.log(SClistTrack[mainTrack.indexTrack].id);
-	    $(this).toggleClass('like');
-	    // favoriteList.push(
-	    //   {
-	    //     id: SClistTrack[mainTrack.indexTrack].id,
-	    //     index: favoriteList.length,
-	    //     title: SClistTrack[mainTrack.indexTrack].title,
-	    //     user: {
-	    //       avatar_url: SClistTrack[mainTrack.indexTrack].user.avatar_url,
-	    //       username: SClistTrack[mainTrack.indexTrack].user.username
-	    //     }
-	    //   }
-	    // );
-	    console.log("favorite",SClistTrack[mainTrack.indexTrack].user.avatar_url);
-	    var url = 'http://localhost:8089/Muzic/rest/favorite';
+      $(this).toggleClass('like');
+      var nameLike = $(this).attr("class").split(" ")[1];
+      var url = 'http://localhost:8089/Muzic/rest/favorite';
+      if(nameLike === "like"){
 	    var data= {
 	        "authorname": SClistTrack[mainTrack.indexTrack].user.username,
 	            "iduser": id,
 	            "title": SClistTrack[mainTrack.indexTrack].title,
 	            "avatar_url": SClistTrack[mainTrack.indexTrack].user.avatar_url,
 	            "idTrack": SClistTrack[mainTrack.indexTrack].id,
-	    }
-	    fetch(url, {
-	      method: 'POST', // or 'PUT'
-	      body: JSON.stringify(data),
-	      headers:{
-	        'Content-Type': 'application/json'
-	      }
-	    }).then(res => res.json())
-	    .then(response => console.log('Success:', console.log(response)))
-	    .catch(error => console.error('Error:', error));
+      }
+        fetch(url, {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(data),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        }).then(res => res.json())
+        .then(response => console.log('Success:', console.log(response)))
+        .catch(error => console.error('Error:', error));
+      }else {
+        var idmusic = localStorage.getItem('idmusic');
+        console.log(idmusic);
+        var urlDelete ='http://localhost:8089/Muzic/rest/favorite/'+idmusic;
+          fetch(urlDelete, {
+            method: 'DELETE', // or 'PUT'
+            headers:{
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+          .then(response => console.log('Success:', console.log(response)))
+          .catch(error => console.error('Error:', error));
+      }
+	   
 	    
 	  }
 	  catch(err) {
@@ -520,7 +528,13 @@ $(inputSearch).focusin(function(event) {
       speakerProgress.style.top = volume_posY + '%';
       window.sound.setVolume( (100 - volume_posY)*0.01 );
     }
-  })
+  });
+  
+  $(upload_link).on('click', function(event) {
+    event.preventDefault();
+    $(modal_upload).addClass('show');
+  });
+
 
 
   // handle document click
@@ -539,4 +553,4 @@ $(inputSearch).focusin(function(event) {
       hideSearchResult();
     }
   });
-})
+});

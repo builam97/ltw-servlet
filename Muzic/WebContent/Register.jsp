@@ -33,7 +33,7 @@
             Đăng kí tài khoản tại Bee Music
           </span>
 
-          <form action="">
+          <form action="RegisterServlet"  name="form" method="post">
             <div class="input-item">
               <input type="text" name="username" placeholder="username" required id="email-input">
               <i class="iconmo-email font-icon"></i>
@@ -49,7 +49,7 @@
               <i class="iconmo-password font-icon"></i>
             </div>
             
-            <input type="button" value="Đăng kí" class="auth-button-01" (click)=>
+            <input type="submit" value="Đăng kí" class="auth-button-01">
           </form>
 
           <div class="register-suggest">

@@ -26,4 +26,8 @@
  <servlet-name>Java ws</servlet-name>
  <url-pattern>/rest/*</url-pattern>
  </servlet-mapping>
+  <context-param>
+    <param-name>tempfile.dir</param-name>
+    <param-value>tmpfiles</param-value>
+  </context-param>
 </web-app>

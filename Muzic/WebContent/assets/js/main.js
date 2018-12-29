@@ -36,6 +36,7 @@ window.addEventListener('DOMContentLoaded', function(){
       speakerButton = document.getElementById('speaker-button'),
       bulletListTrack = document.getElementById('list-track-bullet'),
       bulletHome = document.getElementById('home-bullet'),
+      bulletLyric = document.getElementById('lyric-bullet'),
       listBtn = document.getElementById('list-btn'),
       gridBtn = document.getElementById('grid-btn'),
       settingBtn = document.getElementById('settingBtn'),
@@ -54,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function(){
       upload_link = document.getElementById('upload_link'),
       modal_upload = document.getElementById('modalUpload')
       ;
-
+      var indexSwiper = 1;
   // console.log(speaker_volume.getBoundingClientRect().y);
   let speaker_volume_posY = speaker_volume.getBoundingClientRect().y,
       volume_posY = 50;
@@ -122,18 +123,18 @@ let updatePlayView = (index, list)=>{
 // play a track
 let playFunc = ()=>{
   if (window.sound) {
+    $('#pause_or_play_btn').attr('src', 'assets/images/pause.png');
     window.sound.play();
     mainTrack.play();
-    $('#pause_or_play_btn').attr('src', 'assets/images/pause.png');
   }
 }
 
 // pause a track
 let pauseFunc = ()=>{
+  $('#pause_or_play_btn').attr('src', 'assets/images/play.png');
   if (window.sound) {
     window.sound.pause();
     mainTrack.pause();
-    $('#pause_or_play_btn').attr('src', 'assets/images/play.png');
   }
 }
 
@@ -265,6 +266,24 @@ $(document).on('click', '#modalFavoriteList .TrackItem', async function(event) {
   $('#like-btn').addClass('like');
   playTrackWithIndex(index, favoriteList);
 });
+
+//init from danh sach yeu thich
+var idtrackrequestInt= parseInt(idtrackrequest);
+if(!!idtrackrequestInt){
+  pauseFunc();
+  $('.play-view__image img').attr('src', urlrequest); 
+  $('.play-view__information .textbox__title').text( title );
+  $('.play-view__information .textbox__subtitle').text(author);
+  mainTrack.setIndex.call(mainTrack, 1);
+  window.sound= SC.stream('/tracks/'+idtrackrequestInt).then(function(player){
+    player.play().then(function(){
+      console.log('Playback started!',player);
+    }).catch(function(e){
+      console.error('Playback rejected. Try calling play() from a user interaction.', e);
+    });
+  playFunc();
+});
+}
 
 $('input[name="alarm-submit"]').on('click', function(event) {
   event.preventDefault();
@@ -421,15 +440,33 @@ $(inputSearch).focusin(function(event) {
 
     // handle show list track
     if (globalEvent.swipeRight) {
-      listTrack.classList.add('show');
-      bulletListTrack.classList.add('active');
-      bulletHome.classList.remove('active');
+      indexSwiper+=1;
+      indexSwiper%=3;
+      
     } else if (globalEvent.swipeLeft) {
+      indexSwiper -=1;
+      if (indexSwiper < 0) {
+        indexSwiper = 2;
+      }
+    }
+    if (indexSwiper === 1) {
+      listTrack.classList.add('show');
+      $('#lyric').removeClass('show');
+      $('.bullet').removeClass('active');
+      bulletListTrack.classList.add('active');
+    } else if (indexSwiper === 0) {
       listTrack.classList.remove('show');
-      bulletListTrack.classList.remove('active');
+      $('#lyric').removeClass('show');
+      $('.bullet').removeClass('active');
       bulletHome.classList.add('active');
+    } else if (indexSwiper === 2) {
+      $('#lyric').addClass('show');
+      listTrack.classList.remove('show');
+      $('.bullet').removeClass('active');
+      bulletLyric.classList.add('active');
     }
 
+    console.log(indexSwiper);
     // reset globalEvent
     globalEvent.reset();
   });
@@ -451,15 +488,36 @@ $(inputSearch).focusin(function(event) {
     };
 
     // handle show list track
+    // handle show list track
     if (globalEvent.swipeRight) {
-      listTrack.classList.add('show');
-      bulletListTrack.classList.add('active');
-      bulletHome.classList.remove('active');
+      indexSwiper+=1;
+      indexSwiper%=3;
+      
     } else if (globalEvent.swipeLeft) {
-      listTrack.classList.remove('show');
-      bulletListTrack.classList.remove('active');
-      bulletHome.classList.add('active');
+      indexSwiper -=1;
+      if (indexSwiper < 0) {
+        indexSwiper = 2;
+      }
     }
+
+    if (indexSwiper === 1) {
+      listTrack.classList.add('show');
+      $('#lyric').removeClass('show');
+      $('.bullet').removeClass('active');
+      bulletListTrack.classList.add('active');
+    } else if (indexSwiper === 0) {
+      listTrack.classList.remove('show');
+      $('#lyric').removeClass('show');
+      $('.bullet').removeClass('active');
+      bulletHome.classList.add('active');
+    } else if (indexSwiper === 2) {
+      $('#lyric').addClass('show');
+      listTrack.classList.add('show');
+      $('.bullet').removeClass('active');
+      bulletLyric.classList.add('active');
+    }
+
+    console.log(indexSwiper);
 
     // reset globalEvent
     globalEvent.reset();
@@ -512,29 +570,85 @@ $(inputSearch).focusin(function(event) {
   })
 
   ballVolume.addEventListener('mousemove', function(e){
-    if(globalEvent.clickBallVolume) {
-      mouseObject.setCurrentPos(e.pageX, e.pageY);
-      // console.log(e.pageY + "moving");
-      volume_posY = e.pageY - speaker_volume_posY;
-      if (e.pageY - speaker_volume_posY < - 1) {
-        volume_posY = 0;
-      } else if (e.pageY - speaker_volume_posY > 111) {
-        volume_posY = 100;
-      } else {
+    try {
+      if(globalEvent.clickBallVolume) {
+        mouseObject.setCurrentPos(e.pageX, e.pageY);
+        // console.log(e.pageY + "moving");
         volume_posY = e.pageY - speaker_volume_posY;
-      }
+        if (e.pageY - speaker_volume_posY < - 1) {
+          volume_posY = 0;
+        } else if (e.pageY - speaker_volume_posY > 111) {
+          volume_posY = 100;
+        } else {
+          volume_posY = e.pageY - speaker_volume_posY;
+        }
 
-      ballVolume.style.top = volume_posY + '%';
-      speakerProgress.style.top = volume_posY + '%';
-      window.sound.setVolume( (100 - volume_posY)*0.01 );
+        ballVolume.style.top = volume_posY + '%';
+        speakerProgress.style.top = volume_posY + '%';
+        window.sound.setVolume( (100 - volume_posY)*0.01 );
+      }
+    } catch(err) {
+      console.log('co loi: ' + err);
     }
   });
-  
+
+    /// upload music
+    $('#file-upload__file').on('change', function(event) {
+      event.preventDefault();
+      // console.log($(this).val());
+      $(this).prev('.name').text($(this).val());
+    });
+
   $(upload_link).on('click', function(event) {
     event.preventDefault();
     $(modal_upload).addClass('show');
   });
+$('#submit-upload-music').on('click', function(event) {
+    event.preventDefault();
+    let lyric = $('.file-upload__lyric').val();
+    if (lyric.length === 0) {
+      lyric = "Chưa có lyric cho bài hát này";
+    } else {
+      lyric = lyric.replace(/[.]/g, "</br>");
+    }
 
+    // if ($('#file-upload__name').length > 0 && $('#file-upload__file').) {}
+    $('.file-upload__lyric').val(lyric);
+    console.log($('#file-upload__file').val());
+    if(validateInputFile()) {
+      $(this).closest('.upload-form-01').submit();
+    }  
+  });
+
+  let changeValidateInput = () => {
+    if(!$('#file-upload__name').val()) {
+      $('#file-upload__name').closest('.input-item').children('.err').addClass('show');
+      return false;
+    } else {
+      $('#file-upload__name').closest('.input-item').children('.err').removeClass('show');
+    }
+
+    if(!$('#file-upload__file').val()) {
+      $('#file-upload__file').closest('.input-item').children('.err').addClass('show');
+      return false;
+    } else {
+      $('#file-upload__file').closest('.input-item').children('.err').removeClass('show');
+    }
+
+    return true;
+  }
+
+  $('#file-upload__name').on('change', function(event) {
+    changeValidateInput();
+  });
+
+  $('#file-upload__file').on('change', function(event) {
+    changeValidateInput();
+  });
+
+  let validateInputFile = ()=>{
+    return changeValidateInput();
+  }
 
 
   // handle document click

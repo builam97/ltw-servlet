@@ -17,7 +17,13 @@ public class favoriteServlet extends HttpServlet{
 	 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	 { 
 		  String idstr = request.getParameter("idmusic");
-		     request.setAttribute("idmusic",idstr);
+		  request.setAttribute("idmusic",idstr);
+		  String urlmusic = request.getParameter("url");
+		  request.setAttribute("urlmusic", urlmusic);
+		  String title = request.getParameter("title");
+		  request.setAttribute("titlemusic", title);
+		  String authorname= request.getParameter("authorname");
+		  request.setAttribute("author", authorname);
 		  RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Home.jsp");
 		  requestDispatcher.forward(request, response);
 		  }

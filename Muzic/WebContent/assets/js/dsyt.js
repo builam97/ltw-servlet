@@ -27,7 +27,7 @@ $(document).ready(function(){
       let html = '';
       favoriteList.forEach(element=>{
         html +=  '<li class="item" >\
-                    <a href="'+pathMusic+'/idparam?idmusic='+element.id+'" >\
+                    <a href="'+pathMusic+'/idparam?idmusic='+element.id+'&url='+element.user.avatar_url+'&title='+element.title+'&authorname='+element.user.username+'" >\
                     <div class="TrackItem " data-trackIndex="'+element.index+'">\
                       <div class="media-wrapper">\
                         <img src="' + element.user.avatar_url + '" alt="'+element.user.username+'" />\

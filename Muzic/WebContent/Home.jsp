@@ -220,7 +220,7 @@
           <div class="close-btn"></div>
         </div>
         <div class="modal-body">
-          <form action="" class="upload-form">
+          <form action="UploadDownloadFileServlet" method="post" enctype="multipart/form-data" class="upload-form">
             <div class="left-content">
               <div class="input-item">
                 <label for="file-upload__name" class="desc">
@@ -232,26 +232,18 @@
               <div class="input-item">
                 <span class="desc">Chọn file</span>
                 <label for="file-upload__file" class="file-upload__file-label">
-                 <input type="file" name="" id="file-upload__file">
+                  <span class="name">Click me!</span>
+                 <input type="file" name="fileName" id="file-upload__file">
                 </label>
               </div>
             </div>
             
             <div class="right-content">
-              <div class="input-item">
-                <span class="desc">Chọn chất lượng nhạc</span>
-                <select name="quality" id="">
-                  <option value="128">128</option>
-                  <option value="164">164</option>
-                  <option value="320">320</option>
-                </select>
-              </div>
-              
               <textarea name="" id="" cols="30" rows="10" placeholder="Nhập lời bài hát ... "></textarea>
             </div> 
 
             <div class="btn-wrapper">
-              <button class="file-upload__button">Upload</button>
+              <input class="file-upload__button" type="submit" value="Upload">
             </div>
           </form>
         </div>

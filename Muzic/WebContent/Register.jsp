@@ -33,25 +33,24 @@
             Đăng kí tài khoản tại Bee Music
           </span>
 
-          <form action="RegisterServlet"  name="form" method="post">
+          <form action=""  name="form">
             <div class="input-item">
               <input type="text" name="username" placeholder="username" required id="email-input">
               <i class="iconmo-email font-icon"></i>
             </div>
 
             <div class="input-item">
-              <input type="password" placeholder="password" name="password" required id="">
+              <input type="password" placeholder="password" name="password" required>
               <i class="iconmo-password font-icon"></i>
             </div>
 
             <div class="input-item">
-              <input type="password" placeholder="re-type password" name="password" required id="">
+              <input type="password" placeholder="re-type password" name="re-password" required>
               <i class="iconmo-password font-icon"></i>
             </div>
             
-            <input type="submit" value="Đăng kí" class="auth-button-01">
+            <input type="button" value="Đăng kí" class="auth-button-01" onclick="callRegister()">
           </form>
-
           <div class="register-suggest">
             <span>Bạn đã có tài khoản ?</span>
             <a href="Login.jsp" class="link-suggest">Đăng nhập</a>
@@ -60,11 +59,24 @@
       </div>
     </div>
   </div>
+   <div class="modal-01" id="modalUpload">
+        <div class="modal-header">
+          <p class="modal__title">Thông báo</p>
+          <div class="close-btn" id="close-btn"></div>
+        </div>
+        <div class="modal-body">
+              <div class="input-item">
+                <h4 class="desc" id="content" style="text-align: center">
+                </h4>
+              </div>
+              </div>
+       </div>
 </body>
 <!-- js -->
 <script src="assets/js/background2.js"></script>
 <script src="https://connect.soundcloud.com/sdk/sdk-3.3.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+<script src="assets/js/callregister.js"></script>
 <!-- <script src="assets/js/SC.js"></script> -->
-<!-- <script src="assets/js/main.js"></script> -->
+<script src="assets/js/main.js"></script>
 </html>

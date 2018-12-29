@@ -26,7 +26,8 @@ $(document).ready(function(){
       }
       let html = '';
       favoriteList.forEach(element=>{
-        html +=  '<li class="item">\
+        html +=  '<li class="item" >\
+                    <a href="'+pathMusic+'/idparam?idmusic='+element.id+'" >\
                     <div class="TrackItem " data-trackIndex="'+element.index+'">\
                       <div class="media-wrapper">\
                         <img src="' + element.user.avatar_url + '" alt="'+element.user.username+'" />\
@@ -34,7 +35,7 @@ $(document).ready(function(){
                       <p class="title">'+element.title+'</p>\
                       <p class="authors">'+element.user.username+'</p>\
                     </div>\
-                    <div class="Track-edit"><button class="btn-remove btnremove" id="'+ element.idMusic + '">Xóa</button></div></li>';
+                    <div class="Track-edit"><button class="btn-remove btnremove" id="'+ element.idMusic + '">Xóa</button></div></a></li>';
       });
         $('#dsyt').html(html);
         $(document).on('click', '.btn-remove', function(event) {

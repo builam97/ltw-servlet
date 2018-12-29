@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="assets/css/main.css">
   <script type="text/javascript">
   var username = '<%=session.getAttribute("username") %>';
+  var pathMusic= '${pageContext.request.contextPath}';
   </script>
 </head>
 <body>
@@ -69,7 +70,7 @@
                     <img src="assets/images/user.png" alt="user">
                   </div>
                   <div class="user-infor">
-                    <span class="name" id="user"></span>
+                    <span href="" class="name" id="user"></span>
                   </div>
                 </div>
                 <ul class="menu-sidebar">

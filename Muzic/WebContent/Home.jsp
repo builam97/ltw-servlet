@@ -16,6 +16,8 @@
   <script type="text/javascript">
   	var username = '<%=session.getAttribute("username") %>';
   	var id = '<%=session.getAttribute("idusers") %>';
+  	var idtrackrequest= '<%=request.getAttribute("idmusic") %>';
+  	console.log('request',idtrackrequest)
   </script>
 </head>
 <body>

@@ -25,7 +25,6 @@ public class LoginServlet extends HttpServlet{
 		String userValidate = logindao.authenticateUser(loginbean);
 		HttpSession session = request.getSession();
 		if(userValidate.equals("SUCCESS")) {
-			request.setAttribute("username", username);
 			session.setAttribute("username", username);
 			session.setAttribute("idusers", loginbean.getId());
 			System.out.println(session.getAttribute("idusers"));

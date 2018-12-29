@@ -47,7 +47,7 @@ public class DownloadAttachmentServlet extends HttpServlet{
 	 
 	    
 	           // Với các file attachment dung lượng lớn
-	           // nên đọc và ghi lần lượt
+	           // nên đ�?c và ghi lần lượt
 	           Blob fileData = attachment.getFileData();
 	           InputStream is = fileData.getBinaryStream();
 	 

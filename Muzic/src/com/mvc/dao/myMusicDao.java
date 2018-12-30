@@ -14,12 +14,13 @@ public String addMusic(myMusic music) {
 	Connection conn = null;
 	conn = DBConnection.createConnection();
 	try {
-		PreparedStatement pstm = conn.prepareStatement("INSERT INTO mymusic (`musicname`, `author`, `url`, `content`, `iduser`) VALUES (?, ?, ?, ?, ?)");
+		PreparedStatement pstm = conn.prepareStatement("INSERT INTO mymusic (`musicname`, `author`, `url`, `content`,`extendfile`, `iduser`) VALUES (?, ?, ?, ?, ?, ?)");
 		pstm.setString(1, music.getMusicname());
 		pstm.setString(2, music.getAuthor());
 		pstm.setString(3, music.getUrl());
 		pstm.setString(4, music.getContent());
-		pstm.setInt(5, music.getIduser());
+		pstm.setString(5, music.getExtendFile());
+		pstm.setInt(6, music.getIduser());
 		pstm.execute();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block

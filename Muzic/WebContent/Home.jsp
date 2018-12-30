@@ -20,6 +20,7 @@
   	var urlrequest ='<%=request.getAttribute("urlmusic") %>';
   	var title ='<%=request.getAttribute("titlemusic") %>';
   	var author = '<%=request.getAttribute("author") %>';
+  	
   </script>
 </head>
 <body>
@@ -29,7 +30,10 @@
         <img src="assets/images/bee.png" alt="Bee music">
         <span class="text">Bee Music</span>
       </div>
-
+      <div class="trigger">
+        <img src="assets/images/menu.png" alt="trigger">
+      </div>
+      
       <ul class="menu-01">
         <!-- ////////////////////////chua login//////////////////////////// -->
         <!-- <li class="item">
@@ -102,7 +106,7 @@
                <div class="lyric" id="lyric">
               <p class="lyric__name">Unknow</p>
               <span class="lyric__author">Unknow</span>
-              <div class="lyric__text">
+              <div class="lyric__text" id="lyriec__text">
                 Chưa có lời bài hát
               </div>
             </div>
@@ -229,17 +233,29 @@
           <div class="close-btn"></div>
         </div>
         <div class="modal-body">
-          <form action="UploadDownloadFileServlet" method="post" enctype="multipart/form-data" class="upload-form">
+          <form action="UploadDownloadFileServlet" method="POST" enctype="multipart/form-data" class="upload-form-01">
             <div class="left-content">
               <div class="input-item">
                 <label for="file-upload__name" class="desc">
                   Tên bài hát
                 </label>
-                <input type="text" name="" id="file-upload__name" class="input-song-name">
+                <span class="err">* Trường này bắt buộc phải nhập</span>
+                <input type="text" name="songName" id="file-upload__name" class="input-song-name">
               </div>
 
               <div class="input-item">
+                <span class="desc">Định dạng nhạc</span>
+                <select name="extendFile" id="">
+                  <option value="mp3" selected>MP3</option>
+                  <option value="wav">WAV</option>
+                  <option value="flac">FLAC</option>
+                  <option value="ape">APE</option>
+                </select>
+              </div>
+              
+              <div class="input-item">
                 <span class="desc">Chọn file</span>
+                <span class="err">* Trường này bắt buộc phải nhập</span>
                 <label for="file-upload__file" class="file-upload__file-label">
                   <span class="name">Click me!</span>
                  <input type="file" name="fileName" id="file-upload__file">
@@ -247,12 +263,21 @@
               </div>
             </div>
             
-            <div class="right-content">
-              <textarea name="" id="" cols="30" rows="10" placeholder="Nhập lời bài hát ... " class="file-upload__lyric"></textarea>
+                <div class="right-content">
+              <div class="input-item">
+                <span class="desc">Chọn chất lượng nhạc</span>
+                <select name="quality" id="">
+                  <option value="128" selected>128</option>
+                  <option value="164">164</option>
+                  <option value="320">320</option>
+                </select>
+              </div>
+              
+              <textarea name="content" id="" cols="30" rows="10" placeholder="Nhập lời bài hát ... " class="file-upload__lyric"></textarea>
             </div> 
 
             <div class="btn-wrapper">
-              <input class="file-upload__button" type="submit" value="Upload">
+              <input class="file-upload__button" type="submit" id="submit-upload-music" value="Upload">
             </div>
           </form>
         </div>

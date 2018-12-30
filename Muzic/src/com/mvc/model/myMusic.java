@@ -6,9 +6,16 @@ private String musicname;
 private String author;
 private String url;
 private String content;
+private String extendFile;
 private int iduser;
 public int getId() {
 	return id;
+}
+public String getExtendFile() {
+	return extendFile;
+}
+public void setExtendFile(String extendFile) {
+	this.extendFile = extendFile;
 }
 public void setId(int id) {
 	this.id = id;
@@ -43,13 +50,14 @@ public int getIduser() {
 public void setIduser(int iduser) {
 	this.iduser = iduser;
 }
-public myMusic(int id, String musicname, String author, String url, String content, int iduser) {
+public myMusic(int id, String musicname, String author, String url, String content,String extendFile, int iduser) {
 	super();
 	this.id = id;
 	this.musicname = musicname;
 	this.author = author;
 	this.url = url;
 	this.content = content;
+	this.extendFile = extendFile;
 	this.iduser = iduser;
 }
 public myMusic() {

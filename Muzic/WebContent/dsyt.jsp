@@ -46,7 +46,7 @@
               </li>
 
               <li class="item">
-                <a href="#" id="my-music">Nhạc của tôi</a>
+                <a href="ncn.jsp" id="my-music">Nhạc của tôi</a>
               </li>
 
               <li class="item upload-item">
@@ -60,7 +60,7 @@
         </li>
 
         <li class="item">
-          <a href="login.html">Đăng xuất</a>
+          <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
         </li>
       </ul>
     </nav>
@@ -77,10 +77,10 @@
                 </div>
                 <ul class="menu-sidebar">
                   <li class="item">
-                    <a class="active" href="dsyt.html">Danh sách yêu thích</a>
+                    <a class="active" href="#">Danh sách yêu thích</a>
                   </li>
                   <li class="item">
-                    <a href="ncn.html">Nhạc cá nhân</a>
+                    <a href="ncn.jsp">Nhạc cá nhân</a>
                   </li>
                 </ul>
               </nav>
@@ -94,6 +94,61 @@
                 </ul>
               </div>
             </div>
+            
+      <div class="modal-01" id="modalUpload">
+        <div class="modal-header">
+          <p class="modal__title">Tải nhạc lên website</p>
+          <div class="close-btn"></div>
+        </div>
+        <div class="modal-body">
+          <form action="/login.html" class="upload-form-01">
+            <div class="left-content">
+              <div class="input-item">
+                <label for="file-upload__name" class="desc">
+                  Tên bài hát
+                </label>
+                <span class="err">* Trường này bắt buộc phải nhập</span>
+                <input type="text" name="" id="file-upload__name" class="input-song-name" required="">
+              </div>
+
+              <div class="input-item">
+                <span class="desc">Định dạng nhạc</span>
+                <select name="extendFile" id="">
+                  <option value="mp3" selected>MP3</option>
+                  <option value="wav">WAV</option>
+                  <option value="flac">FLAC</option>
+                  <option value="ape">APE</option>
+                </select>
+              </div>
+
+              <div class="input-item">
+                <span class="desc">Chọn file</span>
+                <label for="file-upload__file" class="file-upload__file-label">
+                  <span class="name">Click me!</span>
+                 <input type="file" name="" id="file-upload__file" required="">
+                </label>
+              </div>
+            </div>
+            
+            <div class="right-content">
+              <div class="input-item">
+                <span class="desc">Chọn chất lượng nhạc</span>
+                <select name="quality" id="">
+                  <option value="128" selected>128</option>
+                  <option value="164">164</option>
+                  <option value="320">320</option>
+                </select>
+              </div>
+              
+              <textarea name="" id="" cols="30" rows="10" placeholder="Nhập lời bài hát ... " class="file-upload__lyric"></textarea>
+            </div> 
+
+            <div class="btn-wrapper">
+              <button class="file-upload__button" id="submit-upload-music">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
           </div>
         </div>
       </body>
@@ -103,4 +158,5 @@
       <script src="assets/js/SC.js"></script>
       <script src="assets/js/main.js"></script>
       <script src="assets/js/dsyt.js"></script>
+      <script src="assets/js/modal.js"></script>
  </html>

@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -21,10 +22,16 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.mvc.dao.myMusicDao;
+import com.mvc.model.myMusic;
+
 @WebServlet("/UploadDownloadFileServlet")
 public class UploadDownloadFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private ServletFileUpload uploader = null;
+	public UploadDownloadFileServlet() {
+		super();
+	}
 	@Override
 	public void init() throws ServletException{
 		DiskFileItemFactory fileFactory = new DiskFileItemFactory();
@@ -62,18 +69,22 @@ public class UploadDownloadFileServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String content = request.getParameter("content");
 		if(!ServletFileUpload.isMultipartContent(request)){
 			throw new ServletException("Content type is not multipart/form-data");
 		}
-		
 		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.write("<html><head></head><body>");
 		try {
 			List<FileItem> fileItemsList = uploader.parseRequest(request);
 			Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
 			while(fileItemsIterator.hasNext()){
+				String urlDb = request.getServletContext().getAttribute("FILES_DIR").toString();
+				System.out.println("url"+urlDb);
+				System.out.println("content"+content);
 				FileItem fileItem = fileItemsIterator.next();
+				myMusic music = new myMusic(0,fileItem.getName(),"unknow",urlDb,content,1);
+				myMusicDao musicdao = new myMusicDao();
+				musicdao.addMusic(music);
 				System.out.println("FieldName="+fileItem.getFieldName());
 				System.out.println("FileName="+fileItem.getName());
 				System.out.println("ContentType="+fileItem.getContentType());
@@ -83,16 +94,15 @@ public class UploadDownloadFileServlet extends HttpServlet {
 				System.out.println("Absolute Path at server="+file.getAbsolutePath());
 				System.out.println("request servlet"+request.getServletContext().getAttribute("FILES_DIR"));
 				fileItem.write(file);
-				out.write("File "+fileItem.getName()+ " uploaded successfully.");
-				out.write("<br>");
-				out.write("<a href=\"UploadDownloadFileServlet?fileName="+fileItem.getName()+"\">Download "+fileItem.getName()+"</a>");
 			}
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Home.jsp");
+			requestDispatcher.forward(request, response);
+			return;
 		} catch (FileUploadException e) {
-			out.write("Exception in uploading file."+e.getMessage());
+			e.printStackTrace();
 		} catch (Exception e) {
-			out.write("Exception in uploading file."+e.getMessage());
+			e.printStackTrace();
 		}
-		out.write("</body></html>");
 	}
 
 }

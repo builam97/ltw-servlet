@@ -17,7 +17,9 @@
   	var username = '<%=session.getAttribute("username") %>';
   	var id = '<%=session.getAttribute("idusers") %>';
   	var idtrackrequest= '<%=request.getAttribute("idmusic") %>';
-  	console.log('request',idtrackrequest)
+  	var urlrequest ='<%=request.getAttribute("urlmusic") %>';
+  	var title ='<%=request.getAttribute("titlemusic") %>';
+  	var author = '<%=request.getAttribute("author") %>';
   </script>
 </head>
 <body>
@@ -46,7 +48,7 @@
               </li>
 
               <li class="item">
-                <a href="#" id="my-music">Nhạc của tôi</a>
+                <a href="ncn.jsp" id="my-music">Nhạc của tôi</a>
               </li>
 
               <li class="item upload-item">
@@ -96,6 +98,13 @@
               </ul>
 
               <!-- { eleLoad } -->
+            </div>
+               <div class="lyric" id="lyric">
+              <p class="lyric__name">Unknow</p>
+              <span class="lyric__author">Unknow</span>
+              <div class="lyric__text">
+                Chưa có lời bài hát
+              </div>
             </div>
           </div>
         </div>
@@ -239,7 +248,7 @@
             </div>
             
             <div class="right-content">
-              <textarea name="" id="" cols="30" rows="10" placeholder="Nhập lời bài hát ... "></textarea>
+              <textarea name="" id="" cols="30" rows="10" placeholder="Nhập lời bài hát ... " class="file-upload__lyric"></textarea>
             </div> 
 
             <div class="btn-wrapper">

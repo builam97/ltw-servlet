@@ -266,24 +266,6 @@ $(document).on('click', '#modalFavoriteList .TrackItem', async function(event) {
   $('#like-btn').addClass('like');
   playTrackWithIndex(index, favoriteList);
 });
-//init from danh sach yeu thich
-var idtrackrequestInt= parseInt(idtrackrequest);
-if(!!idtrackrequestInt){
-  pauseFunc();
-  $('.play-view__image img').attr('src', urlrequest); 
-  $('.play-view__information .textbox__title').text( title );
-  $('.play-view__information .textbox__subtitle').text(author);
-  mainTrack.setIndex.call(mainTrack, 1);
-  window.sound= SC.stream('/tracks/'+idtrackrequestInt).then(function(player){
-    player.play().then(function(){
-      console.log('Playback started!',player);
-    }).catch(function(e){
-      console.error('Playback rejected. Try calling play() from a user interaction.', e);
-    });
-  playFunc();
-});
-}
-
 
 //init from danh sach yeu thich
 var idtrackrequestInt= parseInt(idtrackrequest);

@@ -22,8 +22,10 @@
   <div id="app">
     <nav class="menu-wrapper">
       <div class="logo">
+      <a href="${pageContext.request.contextPath}/idparam">
         <img src="assets/images/bee.png" alt="Bee music">
         <span class="text">Bee Music</span>
+        </a>
       </div>
 
       <ul class="menu-01">
